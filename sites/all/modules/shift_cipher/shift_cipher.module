@@ -88,6 +88,14 @@ function shift_cipher_form_submit($form, &$form_state) {
             if ($character === $letter) {
                 $new_letter_key = (key($alphabet_array) + ($shift_value));
 
+                if ($new_letter_key > 25) {
+                    $new_letter_key = ($new_letter_key - 26);
+                }
+
+                else if ($new_letter_key < 0) {
+                    $new_letter_key = ($new_letter_key + 26);
+                }
+
                 array_push($encrypted_characters_array, $alphabet_array[$new_letter_key]);
             }
         }
