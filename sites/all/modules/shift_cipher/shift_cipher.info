@@ -1,0 +1,5 @@
+name = Shift Cipher
+description = Encodes user input phrases using a shift cipher
+package = Custom Modules
+core = 7.x
+files[] = shift_cipher.module
