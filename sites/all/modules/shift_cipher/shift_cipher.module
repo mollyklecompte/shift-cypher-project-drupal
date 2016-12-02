@@ -1,0 +1,67 @@
+<?php
+
+function shift_cipher_menu() {
+    $items['shift_cipher'] = array(
+        'title' => 'Shift Cipher',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('shift_cipher_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['shift_cipher_encryption'] = array(
+        'title' => 'Your Encryption',
+        'page callback' => 'page_cipher_success',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function shift_cipher_form() {
+    $form['shift_value'] = array(
+        '#title' => 'Shift value',
+        '#type' => 'textfield',
+        '#description' => t('Enter desired shift value.'),
+        '#element_validate' => array('element_validate_integer_positive'),
+        '#required' => TRUE,
+    );
+    $form['direction'] = array(
+        '#title' => 'Shift direction',
+        '#type' => 'textfield',
+        '#description' => t('Choose a direction to shift (left or right).'),
+        '#element_validate' => array('element_validate_direction'),
+        '#required' => TRUE,
+    );
+    $form['phrase'] = array(
+        '#title' => 'Phrase',
+        '#type' => 'textfield',
+        '#description' => t('Enter your phrase to be encrypted.'),
+        '#element_validate' => array('element_validate_characters'),
+        '#required' => TRUE,
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Encrypt',
+    );
+    return $form;
+}
+
+function element_validate_direction($element) {
+    if ($element['#value'] !== 'left' && $element['#value'] !== 'right') {
+        form_error($element, t('Please enter either "left" or "right" for shift direction.'));
+    }
+}
+
+function element_validate_characters($element) {
+    $characters_array = str_split($element['#value']);
+
+    foreach($characters_array as $character) {
+        if (ctype_alnum($character) || $character === " " || $character === "," || $character === "." || $character === "!" or $character === "?" || $character === "'" || $character === ";" || $character === ":") {
+        }
+
+        else {
+            form_error($element, t('Please include only alphanumeric characters, spaces, and basic punctuation in your phrase.'));
+        }
+    }
+}
