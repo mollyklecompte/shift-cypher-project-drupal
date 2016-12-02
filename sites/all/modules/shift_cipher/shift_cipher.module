@@ -112,5 +112,4 @@ function shift_cipher_success() {
     $encrypted_phrase = $_SESSION['encrypted_phrase'];
 
     return 'Your encrypted phrase is: ' . $encrypted_phrase;
-    // return "dicks";
 }
