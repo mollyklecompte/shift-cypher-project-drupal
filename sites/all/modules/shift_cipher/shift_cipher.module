@@ -115,5 +115,5 @@ function shift_cipher_form_submit($form, &$form_state) {
 function shift_cipher_success() {
     $encrypted_phrase = $_SESSION['encrypted_phrase'];
 
-    return 'Your encrypted phrase is: ' . $encrypted_phrase;
+    return '<h4><em>Your encrypted phrase is:</em></h4>' . $encrypted_phrase;
 }
