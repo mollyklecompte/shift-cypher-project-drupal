@@ -83,23 +83,27 @@ function shift_cipher_form_submit($form, &$form_state) {
         $shift_value = -($shift_value);
     }
 
-    while ($letter = current($alphabet_array)) {
-        foreach ($characters_array as $character) {
-            if ($character === $letter) {
-                $new_letter_key = (key($alphabet_array) + ($shift_value));
+    foreach($characters_array as $character) {
+        if (ctype_alpha($character)) {
+            foreach ($alphabet_array as $letter) {
+                if ($character === $letter) {
+                    $new_letter_key = (key($alphabet_array) -1 + ($shift_value));
 
-                if ($new_letter_key > 25) {
-                    $new_letter_key = ($new_letter_key - 26);
+                    if ($new_letter_key > 25) {
+                        $new_letter_key = ($new_letter_key - 26);
+                    }
+
+                    else if ($new_letter_key < 0) {
+                        $new_letter_key = ($new_letter_key + 26);
+                    }
+
+                    array_push($encrypted_characters_array, $alphabet_array[$new_letter_key]);
                 }
-
-                else if ($new_letter_key < 0) {
-                    $new_letter_key = ($new_letter_key + 26);
-                }
-
-                array_push($encrypted_characters_array, $alphabet_array[$new_letter_key]);
             }
         }
-        next($alphabet_array);
+        else {
+            array_push($encrypted_characters_array, $character);
+        }
     }
 
     $encrypted_phrase = implode($encrypted_characters_array);
