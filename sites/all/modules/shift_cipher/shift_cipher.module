@@ -101,6 +101,9 @@ function shift_cipher_form_submit($form, &$form_state) {
                 }
             }
         }
+        elseif ($character = " ") {
+            array_push($encrypted_characters_array,'&nbsp');
+        }
         else {
             array_push($encrypted_characters_array, $character);
         }
